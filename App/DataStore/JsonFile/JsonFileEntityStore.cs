@@ -20,10 +20,13 @@ public class JsonFileEntityStore<T> : IEntityStore<T>
     public Type ElementType => typeof(T);
     public Expression Expression => _queryable.Expression;
     public IQueryProvider Provider => _queryable.Provider;
-    public bool ContainsListCollection => false;
 
     public IEnumerator<T> GetEnumerator() => _queryable.GetEnumerator();
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return _data.GetEnumerator();
+    }
+
     public IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
         => new AsyncEnumeratorWrapper(_queryable.GetEnumerator());
 
@@ -31,12 +34,6 @@ public class JsonFileEntityStore<T> : IEntityStore<T>
     {
         if (entity == null) throw new ArgumentNullException(nameof(entity));
         _data.Add(entity);
-    }
-
-    public void Remove(T entity)
-    {
-        if (entity == null) throw new ArgumentNullException(nameof(entity));
-        _data.Remove(entity);
     }
 
     public void Delete(T entity)
@@ -52,10 +49,6 @@ public class JsonFileEntityStore<T> : IEntityStore<T>
         await JsonSerializer.SerializeAsync(stream, _data, options);
     }
 
-    public IList GetList()
-    {
-        return _data.ToList();
-    }
 
     private List<T> LoadFromFile()
     {

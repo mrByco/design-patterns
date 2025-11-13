@@ -1,10 +1,8 @@
 ﻿using App.DataStore;
-using System;
 using System.Collections;
-using System.ComponentModel;
 using System.Linq.Expressions;
 
-public class MemoryEntityStore<T> : IEntityStore<T>, IQueryable<T>, IAsyncEnumerable<T>, IListSource
+public class MemoryEntityStore<T> : IEntityStore<T>
 {
     private static List<T> _data;
     private static IQueryable<T> _queryable;
@@ -19,15 +17,8 @@ public class MemoryEntityStore<T> : IEntityStore<T>, IQueryable<T>, IAsyncEnumer
     public Expression Expression => _queryable.Expression;
     public IQueryProvider Provider => _queryable.Provider;
 
-    public bool ContainsListCollection => false;
-
-    public IList GetList()
-    {
-        return _data.ToList();
-    }
-
     public IEnumerator<T> GetEnumerator() => _queryable.GetEnumerator();
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => _queryable.GetEnumerator();
 
     public IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
         => new AsyncEnumeratorWrapper(_queryable.GetEnumerator());

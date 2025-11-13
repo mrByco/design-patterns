@@ -8,4 +8,5 @@ public interface IWarehouseRepository
     Task AddWarehouse(Warehouse warehouse);
     Task DeleteWarehouse(int id);
     Task Update(int id, Warehouse warehosue);
+    Task<Warehouse> GetWarehouse(int id);
 }

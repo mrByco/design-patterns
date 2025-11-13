@@ -2,7 +2,7 @@
 
 namespace App.DataStore;
 
-public interface IEntityStore<TEntity>: IQueryable<TEntity>, IAsyncEnumerable<TEntity>, IEnumerable<TEntity>, IListSource
+public interface IEntityStore<TEntity>: IQueryable<TEntity>
 {
     void Add(TEntity entity);
     void Delete(TEntity entity);

@@ -1,11 +1,9 @@
 ﻿using App.Commands;
-using System.IO;
-using System.Reflection;
-using System;
 using DI;
 
 namespace App.Misc;
 
+// Lehet hogy nem igazi factory de így tesztelhető és ez a legjobb név amit találtam
 public class CommandFactory : ICommandFactory
 {
     public ICommand CreateCommand(Type type, ICustomServiceProvider serviceProvider, params string[] commandParams)
@@ -40,7 +38,6 @@ public class CommandFactory : ICommandFactory
         commandInstance.InjectDependencies(serviceProvider);
 
         return commandInstance;
-
     }
 
     

@@ -9,7 +9,8 @@ public class WarehosueRepository : IWarehouseRepository
     private IEntityStore<Warehouse> items;
 
     [DI]
-    public IDataStoreStrategy Storage {
+    public IDataStoreStrategy Storage
+    {
         init => items = value.GetEntityStore<Warehouse>();
     }
 
@@ -37,5 +38,10 @@ public class WarehosueRepository : IWarehouseRepository
         await DeleteWarehouse(id);
         await AddWarehouse(warehosue);
         await items.SaveChangesAsync();
+    }
+
+    public async Task<Warehouse> GetWarehouse(int id)
+    {
+        return items.FirstOrDefault(x => x.Id == id);
     }
 }

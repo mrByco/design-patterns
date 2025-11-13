@@ -1,9 +1,9 @@
 ﻿namespace App.DataStore.InMemory;
 
-public class InMemoryDataStoreStrategy : IDataStoreStrategy
+internal class MemoryEntityStoreProvider : IDataStoreStrategy
 {
     public IEntityStore<TEntity> GetEntityStore<TEntity>()
     {
-        return new MemoryEntityStore<TEntity>([]);
+        return new MemoryEntityStore<TEntity>();
     }
 }

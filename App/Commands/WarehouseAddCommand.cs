@@ -9,11 +9,11 @@ public class WarehouseAddCommand : ICommand
     [DI]
     public IWarehouseRepository _warehouseRepostiry { private get; init; }
 
-    private string _name { get;set; }
+    public string name { get;set; }
 
     public WarehouseAddCommand(string name)
     {
-        this._name = name;
+        this.name = name;
     }
 
     
@@ -21,7 +21,7 @@ public class WarehouseAddCommand : ICommand
     {
         var warehouse = new Warehouse()
         {
-            Name = this._name
+            Name = this.name
         };
 
         await _warehouseRepostiry.AddWarehouse(warehouse);
